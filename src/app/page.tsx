@@ -10,6 +10,7 @@ import { Button } from '@nextui-org/button';
 import Image from "next/image";
 // my component
 import Footer from "@/app/components/footer";
+import InfoText from "@/app/components/infoText";
 
 
 export default function Thumbnails () {
@@ -105,37 +106,19 @@ export default function Thumbnails () {
   return (
     <main className={styles.main}>
       <h1>サムネイル作成</h1>
-      <section className={styles.infoTextArea}>
-        <h2>■ Info</h2>
-        <div className={styles.textBox}>
-          <h3>● 推奨している画像仕様</h3>
-          <ul>
-            <li>アスペクト比が16:9であるもの</li>
-            <li>解像度が横1280×縦720</li>
-            <li>キャプチャ画像はJPEG,PNG,BMPを想定</li>
-            <li>デザインの方は透過が設定されているPNGのみ対応</li>
-          </ul>
-        </div>
-        <div className={styles.textBox}>
-        <h3>● 出力される画像仕様</h3>
-        <ul>
-          <li>解像度は横1280×縦720</li>
-          <li>特に圧縮処理はしていないが、概ね1MB以下のJPEG形式</li>
-        </ul>
-        </div>
-        <div className={styles.textBox}>
-        <h3>● 注意事項</h3>
-        <ul>
-          <li>個人が作成したものなので、意図しないエラーが発生することもあります。</li>
-          <li>アスペクト比が16:9でない場合、出力された画像が意図しない結果になる可能性があります。</li>
-          <li>選択された画像の解像度が低い場合、引き伸ばされて表示されるため出力時の解像度が荒くなります。</li>
-        </ul>
-        </div>
-      </section>
+      <InfoText/>
       <div className={styles.inputArea}>
         <dl className={styles.inputImage}>
           <dt>キャプチャ</dt>
-          <dd><input ref={caputuredImageRef} id="caputuredImage" type="file" accept="image/*" onChange={selectedFileHandler}/></dd>
+          <dd>
+            <input
+              ref={caputuredImageRef}
+              id="caputuredImage"
+              type="file"
+              accept="image/*"
+              onChange={selectedFileHandler}
+            />
+          </dd>
           {/* イメージ要素はファイルが選択されている場合のみ表示 */}
           {caputuredImage && (
             <dd className={styles.inputImageBox}>
@@ -151,7 +134,15 @@ export default function Thumbnails () {
         </dl>
         <dl className={styles.inputImage}>
           <dt>デザイン選択</dt>
-          <dd><input ref={selectedDesignRef} id="selectedDesign" type="file" accept="image/png" onChange={selectedFileHandler}/></dd>
+          <dd>
+            <input
+              ref={selectedDesignRef}
+              id="selectedDesign"
+              type="file"
+              accept="image/png"
+              onChange={selectedFileHandler}
+            />
+          </dd>
           {/* イメージ要素はファイルが選択されている場合のみ表示 */}
           {selectedDesign && (
             <dd className={styles.inputImageBox}>

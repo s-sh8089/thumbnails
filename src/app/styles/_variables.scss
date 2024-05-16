@@ -1,3 +1,10 @@
 $title-color: #444;
-$border-color: #bbb;
-$bg-color: #eee;
+$border-color: #999;
+$bg-color: #f4f4f4;
+
+$breakpoints: (
+  sp: 540px,
+  tb: 800px,
+  pc: 960px,
+  lg: 4096px
+);
