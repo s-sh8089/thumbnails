@@ -1,0 +1,125 @@
+@import "@variables";
+@import "@mixin";
+
+$title-color: #444;
+$border-color: #bbb;
+$bg-color: #eee;
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6rem;
+  min-height: 100vh;
+  background: rgb(201,190,174);
+  background: linear-gradient(315deg, rgba(201,190,174,1) 0%, rgba(226,212,181,1) 25%, rgba(255,253,244,1) 100%);
+  h1 {
+    color: $title-color;
+    font-weight: bold;
+    font-size: x-large;
+    margin-bottom: 10px;
+  }
+}
+
+.infoTextArea {
+  width: 100%;
+  padding: 30px;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  background-color: $bg-color;
+  .textBox {
+    &:not(:last-of-type) {
+      margin-bottom: 10px;
+    }
+  }
+  h2 {
+    color: $title-color;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  h3 {
+    color: $title-color;
+  }
+  ul {
+    li {
+      padding-left: 10px;
+      color: #505050;
+      &::before {
+        content: '・';
+      }
+    }
+  }
+}
+
+.inputArea {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  column-gap: 10px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid $border-color;
+  margin-bottom: 30px;
+  width: 100%;
+  .inputImage {
+    width: 50%;
+    padding: 10px;
+    border: 1px solid $border-color;
+    border-radius: 5px;
+    background-color: $bg-color;
+    dt {
+      color: $title-color;
+      font-weight: bold;
+      padding-bottom: 10px;
+      border-bottom: 1px solid $border-color;
+      margin-bottom: 10px;
+    }
+    dd {
+      &:not(:last-of-type) {
+        margin-bottom: 10px;
+      }
+    }
+    .inputImageBox {
+      background-color: #efefef;
+      min-width: 160px;
+    }
+  }
+}
+
+.outputArea {
+  width: 100%;
+  padding: 10px;
+  border:1px solid $border-color;
+  border-radius: 5px;
+  background-color: $bg-color;
+  .outputImage {
+    margin-bottom: 10px;
+    dt {
+      color: $title-color;
+      font-weight: bold;
+      padding-bottom: 10px;
+      border-bottom: 1px solid $border-color;
+      margin-bottom: 10px;
+    }
+    dd {
+      margin-bottom: 10px;
+      canvas {
+        width: 100%;
+        background-color: #efefef;
+      }
+    }
+  }
+}
+
+.buttonArea {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  column-gap: 10px;
+  text-align: center;
+  .buttonBox {
+    &:not(:last-of-type) {
+      margin-bottom: 10px;
+    }
+  }
+}

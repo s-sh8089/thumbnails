@@ -1,0 +1,28 @@
+@import "@variables";
+@import "@mixin";
+
+.header {
+  width: 100%;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 30px;
+  .navigation {
+    width: 100%;
+    ul {
+      text-align: center;
+      li {
+        display: inline-block;
+        padding: 10px;
+        border-radius: 3px;
+        background-color: #98c1fa;
+        text-align: center;
+        &:hover {
+          background-color:#d6e3f7;;
+        }
+        &:not(:last-of-type) {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}
