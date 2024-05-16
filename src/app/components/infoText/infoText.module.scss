@@ -1,0 +1,33 @@
+@import "@variables";
+@import "@mixin";
+
+.infoTextArea {
+  width: 100%;
+  padding: 30px;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  background-color: $bg-color;
+  .textBox {
+    &:not(:last-of-type) {
+      margin-bottom: 10px;
+    }
+  }
+  h2 {
+    color: $title-color;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  h3 {
+    color: $title-color;
+  }
+  ul {
+    li {
+      padding-left: 10px;
+      color: #505050;
+      &::before {
+        content: '・';
+      }
+    }
+  }
+}
