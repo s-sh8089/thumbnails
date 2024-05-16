@@ -80,8 +80,15 @@ $bg-color: #eee;
       }
     }
     .inputImageBox {
+      display: block;
+      position: relative;
       background-color: #efefef;
       min-width: 160px;
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
     }
   }
 }

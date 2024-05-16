@@ -26,9 +26,6 @@ export default function Thumbnails () {
   const selectedDesignRef = useRef<HTMLInputElement>(null!);
 
   useEffect(()=> {
-    canvasRef.current.width = 0;
-    canvasRef.current.height = 0;
-
     return () => {
       // メモリリーク？の対策。おまじない。
       if (caputuredImage && selectedDesign) {
@@ -142,7 +139,13 @@ export default function Thumbnails () {
           {/* イメージ要素はファイルが選択されている場合のみ表示 */}
           {caputuredImage && (
             <dd className={styles.inputImageBox}>
-              <Image id="caputuredImageFile" src={caputuredImage} alt="キャプチャ画像"/>
+              <Image
+                id="caputuredImageFile"
+                src={caputuredImage}
+                alt="キャプチャ画像"
+                width={160}
+                height={90}
+              />
             </dd>
           )}
         </dl>
@@ -152,7 +155,13 @@ export default function Thumbnails () {
           {/* イメージ要素はファイルが選択されている場合のみ表示 */}
           {selectedDesign && (
             <dd className={styles.inputImageBox}>
-              <Image id="selectedDesignFile" src={selectedDesign} alt="デザイン"/>
+              <Image
+                id="selectedDesignFile"
+                src={selectedDesign}
+                alt="デザイン"
+                width={160}
+                height={90}
+              />
             </dd>
           )}
         </dl>
@@ -167,11 +176,11 @@ export default function Thumbnails () {
         </dl>
         <ul className={styles.buttonArea}>
             <li className={styles.buttonBox}>
-              <Button onClick={generateHandler} color="secondary" size="lg" variant="ghost">作成</Button>
+              <Button onClick={generateHandler} color="primary" size="lg" variant="ghost">作成</Button>
             </li>
           {generatedFlag && (
             <li className={styles.buttonBox}>
-              <Button onClick={fileSaveHandler} color="secondary" size="lg" variant="ghost">保存</Button>
+              <Button onClick={fileSaveHandler} color="primary" size="lg" variant="ghost">保存</Button>
             </li>
           )}
           <li>
