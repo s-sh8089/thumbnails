@@ -87,8 +87,8 @@ export default function Thumbnails () {
     const day = date.toLocaleDateString('ja-JP');
     const timestamp = date.toLocaleTimeString('ja-JP')
     let link = document.createElement('a');
-    link.href = canvasRef.current.toDataURL('image/jpg');
-    link.download = `${day}_${timestamp}_thumbnail.jpg`;
+    link.href = canvasRef.current.toDataURL('image/jpeg', 0.7);
+    link.download = `${day}_${timestamp}_thumbnail.jpeg`;
     link.click();
   }
   const resetHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
