@@ -5,7 +5,7 @@ export default function InfoText () {
     <section className={styles.infoTextArea}>
     <h2>■ Info</h2>
       <div className={styles.textBox}>
-        <h3>● 推奨している画像仕様</h3>
+        <h3>● 推奨している入力画像仕様</h3>
         <ul>
           <li>アスペクト比が16:9であるもの</li>
           <li>解像度が横1280×縦720</li>
@@ -17,7 +17,7 @@ export default function InfoText () {
       <h3>● 出力される画像仕様</h3>
       <ul>
         <li>解像度は横1280×縦720</li>
-        <li>特に圧縮処理はしていないが、概ね1MB以下のJPEG形式</li>
+        <li>圧縮するため、およそ500KB以下のJPEG形式</li>
       </ul>
       </div>
       <div className={styles.textBox}>
