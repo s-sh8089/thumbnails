@@ -1,0 +1,140 @@
+@import "@variables";
+@import "@mixin";
+
+$base-margin: 1rem;
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background: rgb(204,204,204);
+  background: linear-gradient(315deg, rgba(204,204,204,1) 0%, rgba(244,235,219,1) 10%, rgba(255,254,248,1) 100%);
+  @include media(lg) {
+    padding: 6rem;
+  }
+  @include media(pc) {
+    padding: 6rem;
+  }
+  @include media(tb) {
+    padding: 3rem;
+    font-size: medium;
+  }
+  @include media(sp) {
+    padding: 1rem;
+    font-size: small;
+  }
+  h1 {
+    color: $title-color;
+    font-weight: bold;
+    font-size: x-large;
+    margin-bottom: $base-margin;
+  }
+}
+
+.inputArea {
+  display: flex;
+  justify-content: space-around;
+  column-gap: $base-margin;
+  padding-bottom: $base-margin *3;
+  border-bottom: 1px solid $border-color;
+  margin-bottom: $base-margin * 3;
+  width: 100%;
+  @include media(lg) {
+    flex-direction: row;
+  }
+  @include media(pc) {
+    flex-direction: row;
+  }
+  @include media(tb) {
+    flex-direction: column;
+  }
+  @include media(sp) {
+    flex-direction: column;
+  }
+  .inputImage {
+    padding: $base-margin;
+    border: 1px solid $border-color;
+    border-radius: 5px;
+    background-color: $bg-color;
+    @include media(lg) {
+      width: 50%;
+    }
+    @include media(pc) {
+      width: 50%;
+    }
+    @include media(tb) {
+      width: 100%;
+      &:not(:last-of-type) {
+        margin-bottom: $base-margin;
+      }
+    }
+    @include media(sp) {
+      width: 100%;
+      &:not(:last-of-type) {
+        margin-bottom: $base-margin;
+      }
+    }
+    dt {
+      color: $title-color;
+      font-weight: bold;
+      padding-bottom: $base-margin;
+      border-bottom: 1px solid $border-color;
+      margin-bottom: $base-margin;
+    }
+    dd {
+      &:not(:last-of-type) {
+        margin-bottom: $base-margin;
+      }
+    }
+    .inputImageBox {
+      display: block;
+      position: relative;
+      background-color: #efefef;
+      min-width: 160px;
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+}
+
+.outputArea {
+  width: 100%;
+  padding: $base-margin;
+  border:1px solid $border-color;
+  border-radius: 5px;
+  background-color: $bg-color;
+  .outputImage {
+    margin-bottom: $base-margin;
+    dt {
+      color: $title-color;
+      font-weight: bold;
+      padding-bottom: $base-margin;
+      border-bottom: 1px solid $border-color;
+      margin-bottom: $base-margin;
+    }
+    dd {
+      margin-bottom: $base-margin;
+      canvas {
+        width: 100%;
+        background-color: #efefef;
+      }
+    }
+  }
+}
+
+.buttonArea {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  column-gap: $base-margin;
+  text-align: center;
+  .buttonBox {
+    &:not(:last-of-type) {
+      margin-bottom: $base-margin;
+    }
+  }
+}
