@@ -18,9 +18,9 @@ export default function Thumbnails () {
   const imageWidth = 1280;
   const imageHeight = 720;
   // 状態管理
-  const [caputuredImage, setCaputuredImage] = useState<string|undefined>(undefined)
-  const [selectedDesign, setSelectedDesign] = useState<string|undefined>(undefined)
-  const [generatedFlag, setgeneratedFlag] = useState<boolean>(false)
+  const [caputuredImage, setCaputuredImage] = useState<string|undefined>(undefined);
+  const [selectedDesign, setSelectedDesign] = useState<string|undefined>(undefined);
+  const [generatedFlag, setgeneratedFlag] = useState<boolean>(false);
   // ref
   const canvasRef = useRef<HTMLCanvasElement>(null!);
   const caputuredImageRef = useRef<HTMLInputElement>(null!);
@@ -67,7 +67,7 @@ export default function Thumbnails () {
       // img要素(キャプチャ)を指定してcanvasに描画
       const caputuredImageFile = document.createElement('img');
       caputuredImageFile.src = caputuredImage;
-      ctx?.drawImage(caputuredImageFile, 0, 0, canvasRef.current.width, canvasRef.current.height)
+      ctx?.drawImage(caputuredImageFile, 0, 0, canvasRef.current.width, canvasRef.current.height);
       // img要素(デザイン)を指定してcanvasに描画
       const selectedDesignFile = document.createElement('img');
       selectedDesignFile.src = selectedDesign;
@@ -85,7 +85,7 @@ export default function Thumbnails () {
     if (!canvasRef.current) return;
     const date = new Date();
     const day = date.toLocaleDateString('ja-JP');
-    const timestamp = date.toLocaleTimeString('ja-JP')
+    const timestamp = date.toLocaleTimeString('ja-JP');
     let link = document.createElement('a');
     link.href = canvasRef.current.toDataURL('image/jpeg', 0.7);
     link.download = `${day}_${timestamp}_thumbnail.jpeg`;
