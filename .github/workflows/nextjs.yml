@@ -24,15 +24,15 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
-# 作業ディレクトリ指定
-defaults:
-  run:
-    working-directory: _application
 
 jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
+    # 作業ディレクトリ指定
+    defaults:
+      run:
+        working-directory: _application
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -91,6 +91,10 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    # 作業ディレクトリ指定
+    defaults:
+      run:
+        working-directory: _application
     needs: build
     steps:
       - name: Deploy to GitHub Pages
