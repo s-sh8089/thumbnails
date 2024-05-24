@@ -68,12 +68,10 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    # 作業ディレクトリ指定
-    defaults:
-      run:
-        working-directory: ./_application
     needs: build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          publish_dir: ./_application/out
