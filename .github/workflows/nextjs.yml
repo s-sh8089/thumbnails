@@ -27,7 +27,7 @@ concurrency:
 # 作業ディレクトリ指定
 defaults:
   run:
-    working-directory: ./_application
+    working-directory: _application
 
 jobs:
   # Build job
