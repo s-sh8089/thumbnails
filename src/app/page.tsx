@@ -36,6 +36,12 @@ export default function Thumbnails () {
     }
   })
 
+
+  const fileInputHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const targetId = event.target.id.replace('Btn', '');
+    const inputElement = document.querySelector(`#${targetId}`);
+    inputElement?.click();
+  }
   // ローカルの画像ファイルを選択する際の処理
   const selectedFileHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -111,12 +117,20 @@ export default function Thumbnails () {
         <dl className={styles.inputImage}>
           <dt>キャプチャ</dt>
           <dd>
+            <Button
+              onClick={fileInputHandler}
+              id="caputuredImageBtn"
+              color="primary"
+              size="large"
+              variant="contained"
+            >ファイル選択</Button>
             <input
               ref={caputuredImageRef}
               id="caputuredImage"
               type="file"
               accept="image/*"
               onChange={selectedFileHandler}
+              hidden
             />
           </dd>
           {/* イメージ要素はファイルが選択されている場合のみ表示 */}
@@ -135,12 +149,20 @@ export default function Thumbnails () {
         <dl className={styles.inputImage}>
           <dt>デザイン選択</dt>
           <dd>
+            <Button
+              onClick={fileInputHandler}
+              id="selectedDesignBtn"
+              color="primary"
+              size="large"
+              variant="contained"
+            >ファイル選択</Button>
             <input
               ref={selectedDesignRef}
               id="selectedDesign"
               type="file"
               accept="image/png"
               onChange={selectedFileHandler}
+              hidden
             />
           </dd>
           {/* イメージ要素はファイルが選択されている場合のみ表示 */}
@@ -166,16 +188,18 @@ export default function Thumbnails () {
           </dd>
         </dl>
         <ul className={styles.buttonArea}>
+          {!generatedFlag &&(
             <li className={styles.buttonBox}>
-              <Button onClick={generateHandler} color="primary" size="large" variant="outlined">作成</Button>
+              <Button onClick={generateHandler} color="primary" size="large" variant="contained">作成</Button>
             </li>
+          )}
           {generatedFlag && (
             <li className={styles.buttonBox}>
-              <Button onClick={fileSaveHandler} color="primary" size="large" variant="outlined">保存</Button>
+              <Button onClick={fileSaveHandler} color="primary" size="large" variant="contained">保存</Button>
             </li>
           )}
           <li>
-            <Button onClick={resetHandler} color="primary" size="large" variant="contained">リセット</Button>
+            <Button onClick={resetHandler} color="primary" size="large" variant="outlined">リセット</Button>
           </li>
         </ul>
       </div>
