@@ -36,12 +36,19 @@ export default function Thumbnails () {
     }
   })
 
-
+  // ファイル選択ボタンが押下されたらinput要素にイベントを伝播する
   const fileInputHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const targetId = event.target.id.replace('Btn', '');
-    const inputElement = document.querySelector(`#${targetId}`);
-    inputElement?.click();
+    const targetId = event.currentTarget.id;
+    switch (targetId) {
+      case 'caputuredImageBtn':
+          caputuredImageRef.current.click();
+          break;
+      case 'selectedDesignBtn':
+          selectedDesignRef.current.click();
+          break;
+    }
   }
+
   // ローカルの画像ファイルを選択する際の処理
   const selectedFileHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -52,7 +59,7 @@ export default function Thumbnails () {
       if (event.target.id === "selectedDesign") {
         setSelectedDesign(URL.createObjectURL(fileObject));
       }
-    }else {
+    } else {
       if (event.target.id === "caputuredImage") {
         setCaputuredImage(undefined);
       }
