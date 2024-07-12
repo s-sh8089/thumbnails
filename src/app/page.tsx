@@ -13,20 +13,20 @@ import Footer from "@/app/components/footer";
 import InfoText from "@/app/components/infoText";
 
 
-export default function Thumbnails () {
+export default function Thumbnails() {
   // 定数
   const imageWidth = 1280;
   const imageHeight = 720;
   // 状態管理
-  const [caputuredImage, setCaputuredImage] = useState<string|undefined>(undefined);
-  const [selectedDesign, setSelectedDesign] = useState<string|undefined>(undefined);
+  const [caputuredImage, setCaputuredImage] = useState<string | undefined>(undefined);
+  const [selectedDesign, setSelectedDesign] = useState<string | undefined>(undefined);
   const [generatedFlag, setgeneratedFlag] = useState<boolean>(false);
   // ref
   const canvasRef = useRef<HTMLCanvasElement>(null!);
   const caputuredImageRef = useRef<HTMLInputElement>(null!);
   const selectedDesignRef = useRef<HTMLInputElement>(null!);
 
-  useEffect(()=> {
+  useEffect(() => {
     return () => {
       // メモリリーク？の対策。おまじない。
       if (caputuredImage && selectedDesign) {
@@ -41,11 +41,11 @@ export default function Thumbnails () {
     const targetId = event.currentTarget.id;
     switch (targetId) {
       case 'caputuredImageBtn':
-          caputuredImageRef.current.click();
-          break;
+        caputuredImageRef.current.click();
+        break;
       case 'selectedDesignBtn':
-          selectedDesignRef.current.click();
-          break;
+        selectedDesignRef.current.click();
+        break;
     }
   }
 
@@ -71,7 +71,7 @@ export default function Thumbnails () {
 
   // 作成ボタンの処理
   const generateHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if(!canvasRef.current) return;
+    if (!canvasRef.current) return;
     if (caputuredImage && selectedDesign) {
       // 出力先のキャンバスサイズを指定
       canvasRef.current.width = imageWidth;
@@ -119,7 +119,7 @@ export default function Thumbnails () {
   return (
     <main className={styles.main}>
       <h1>サムネイル作成</h1>
-      <InfoText/>
+      <InfoText />
       <div className={styles.inputArea}>
         <dl className={styles.inputImage}>
           <dt>キャプチャ</dt>
@@ -195,7 +195,7 @@ export default function Thumbnails () {
           </dd>
         </dl>
         <ul className={styles.buttonArea}>
-          {!generatedFlag &&(
+          {!generatedFlag && (
             <li className={styles.buttonBox}>
               <Button onClick={generateHandler} color="primary" size="large" variant="contained">作成</Button>
             </li>
@@ -210,7 +210,7 @@ export default function Thumbnails () {
           </li>
         </ul>
       </div>
-      <Footer/>
+      <Footer />
     </main>
   )
 }
