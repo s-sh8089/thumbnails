@@ -19,8 +19,8 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@variables": ["./src/app/styles/_variables.scss"],
-      "@mixin": ["./src/app/styles/_mixin.scss"]
+      "@variables": ["./src/app/_styles/_variables.scss"],
+      "@mixin": ["./src/app/_styles/_mixin.scss"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

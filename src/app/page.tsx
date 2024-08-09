@@ -9,9 +9,7 @@ import Button from '@mui/material/Button';
 // Next component
 import Image from "next/image";
 // my component
-import Footer from "@/app/components/footer";
-import InfoText from "@/app/components/infoText";
-
+import InfoText from "@/app/_components/infoText";
 
 export default function Thumbnails() {
   // 定数
@@ -210,7 +208,6 @@ export default function Thumbnails() {
           </li>
         </ul>
       </div>
-      <Footer />
     </main>
   )
 }

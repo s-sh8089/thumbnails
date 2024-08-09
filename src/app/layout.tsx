@@ -3,6 +3,12 @@ import "the-new-css-reset/css/reset.css";
 import "./globals.scss";
 import { Inter } from "next/font/google";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
+import { GlobalProvider } from '@/app/_context/GlobalState';
+
+// my component
+import Header from "@/app/_components/header"
+import Stepbar from "@/app/_components/stepbar"
+import Footer from "@/app/_components/footer"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,9 +25,14 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={inter.className}>
-        <AppRouterCacheProvider>
-          {children}
-        </AppRouterCacheProvider>
+        <GlobalProvider>
+          <AppRouterCacheProvider>
+            <Header/>
+            <Stepbar/>
+            {children}
+            <Footer/>
+          </AppRouterCacheProvider>
+        </GlobalProvider>
       </body>
     </html>
   );
