@@ -53,7 +53,7 @@ $base-margin: 1rem;
     color: #fff;
     background-color: #666;
     border-radius: 50%;
-    transform: translate(-1.22rem, -1rem);
+    transform: translate(-50%, -50%);
     box-shadow: 0px 10px 15px 0px rgba(0, 0, 0, 0.08);
   }
   &::after {
@@ -66,9 +66,8 @@ $base-margin: 1rem;
     line-height: 1;
     font-weight: bold;
     font-size: 3rem;
-    transform: translate(-1.22rem, -1rem);
+    transform: translate(-50%, -32%);
     color: rgba(38, 166, 91, 1);
-    text-shadow: 0px 10px 15px 0px rgba(0, 0, 0, 0.08);
   }
   @include media(lg) {
     flex-direction: row;
