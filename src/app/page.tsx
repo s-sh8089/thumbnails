@@ -118,11 +118,11 @@ export default function Thumbnails () {
   }
   return (
     <main className={styles.main}>
-      <h1>サムネイル作成</h1>
+      <h1>Thumbnail Generator</h1>
       <InfoText/>
       <div className={styles.inputArea}>
         <dl className={styles.inputImage}>
-          <dt>キャプチャ</dt>
+          <dt>Base photo</dt>
           <dd>
             <Button
               onClick={fileInputHandler}
@@ -154,7 +154,7 @@ export default function Thumbnails () {
           )}
         </dl>
         <dl className={styles.inputImage}>
-          <dt>デザイン選択</dt>
+          <dt>Decorative image</dt>
           <dd>
             <Button
               onClick={fileInputHandler}
@@ -189,7 +189,7 @@ export default function Thumbnails () {
 
       <div className={styles.outputArea}>
         <dl className={styles.outputImage}>
-          <dt>出力</dt>
+          <dt>Output</dt>
           <dd className={styles.outputImageBox}>
             <canvas ref={canvasRef} id="canvas" width='0' height='0'></canvas>
           </dd>
