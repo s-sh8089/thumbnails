@@ -20,15 +20,16 @@ Next.js 14（App Router）+ TypeScript製のサムネイル生成ツール。
 - CSSリセット: the-new-css-reset
 - フォント: Inter（next/font/google）
 - Tailwind CSS: インストール済みだが現在は未使用
-- パッケージマネージャー: npm
+- パッケージマネージャー: yarn 1.22.22（corepack 経由）
 
 ## コマンド
 
 - 開発サーバー起動（Docker）: `docker-compose up`（port 3000、ルートで実行）
-- 開発サーバー起動（ローカル）: `cd _application && npm run dev`（port 3000）
-- ビルド（静的エクスポート）: `cd _application && npm run build`
-- 本番サーバー起動: `cd _application && npm run start`
-- Lint: `cd _application && npm run lint`
+- 開発サーバー起動（ローカル）: `cd _application && yarn dev`（port 3000）
+- ビルド（静的エクスポート）: `cd _application && yarn build`
+- 本番サーバー起動: `cd _application && yarn start`
+- Lint: `cd _application && yarn lint`
+- パッケージ追加: `cd _application && yarn add <package>`
 
 ## 開発環境
 
