@@ -24,17 +24,17 @@ Next.js 14（App Router）+ TypeScript製のサムネイル生成ツール。
 
 ## コマンド
 
-- 開発サーバー起動（ローカル）: `npm run dev`（port 3000）
-- 開発サーバー起動（Docker）: `docker-compose up`（port 3000）
-- ビルド（静的エクスポート）: `npm run build`
-- 本番サーバー起動: `npm run start`
-- Lint: `npm run lint`
+- 開発サーバー起動（Docker）: `docker-compose up`（port 3000、ルートで実行）
+- 開発サーバー起動（ローカル）: `cd _application && npm run dev`（port 3000）
+- ビルド（静的エクスポート）: `cd _application && npm run build`
+- 本番サーバー起動: `cd _application && npm run start`
+- Lint: `cd _application && npm run lint`
 
 ## 開発環境
 
-- Dockerを使った開発も可能（コンテナ名: `thumbnails`）
-- Dockerfileは `./_docker/Dockerfile`、アプリコードは `./_application/` にマウント想定
-- ローカル直接開発も可能
+- Dockerを使った開発が基本（コンテナ名: `thumbnails`）
+- Dockerfileは `./_docker/Dockerfile`、アプリコードは `./_application/` にマウント
+- ローカル直接開発の場合は `_application/` 内で `npm run dev` を実行
 
 ## アーキテクチャルール
 
@@ -55,24 +55,36 @@ Next.js 14（App Router）+ TypeScript製のサムネイル生成ツール。
 
 ## ディレクトリ構成
 
-src/
-└── app/
-    ├── components/       # 再利用可能なUIコンポーネント（footer/header/infoText等）
-    ├── styles/           # グローバルSCSS変数・mixin（_variables.scss / _mixin.scss）
-    ├── selectBackgroundImg/  # 開発中ページ（背景画像選択機能）
-    ├── globals.scss      # グローバルスタイル
-    ├── layout.tsx        # ルートレイアウト（MUI AppRouterCacheProvider）
-    ├── page.tsx          # メインページ（サムネイル生成）
-    └── page.module.scss  # メインページのスタイル
+```
+（リポジトリルート）
+├── _application/         # アプリケーションコード（Next.js プロジェクト本体）
+│   ├── src/app/
+│   │   ├── components/       # 再利用可能なUIコンポーネント（footer/header/infoText等）
+│   │   ├── styles/           # グローバルSCSS変数・mixin
+│   │   ├── selectBackgroundImg/  # 開発中ページ（背景画像選択機能）
+│   │   ├── globals.scss
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   └── page.module.scss
+│   ├── public/
+│   ├── next.config.mjs
+│   ├── tsconfig.json
+│   └── package.json
+├── _docker/              # Dockerビルド用ファイル
+│   └── Dockerfile
+├── .github/workflows/    # GitHub Actions
+│   └── nextjs.yml
+└── docker-compose.yml
+```
 
 ## 重要ファイル
 
-- Nextjs設定: `next.config.mjs`（`output: "export"` で静的エクスポート）
-- TypeScript設定: `tsconfig.json`
-- メインページ: `src/app/page.tsx`（Canvas合成ロジック）
-- レイアウト: `src/app/layout.tsx`
-- SCSS変数: `src/app/styles/_variables.scss`（パスエイリアス `@variables`）
-- SCSSミックスイン: `src/app/styles/_mixin.scss`（パスエイリアス `@mixin`）
+- Next.js設定: `_application/next.config.mjs`（静的エクスポート、GitHub Pages用basePath）
+- TypeScript設定: `_application/tsconfig.json`
+- メインページ: `_application/src/app/page.tsx`（Canvas合成ロジック）
+- レイアウト: `_application/src/app/layout.tsx`
+- SCSS変数: `_application/src/app/styles/_variables.scss`（パスエイリアス `@variables`）
+- SCSSミックスイン: `_application/src/app/styles/_mixin.scss`（パスエイリアス `@mixin`）
 
 ## パスエイリアス
 
