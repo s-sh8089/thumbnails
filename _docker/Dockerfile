@@ -8,6 +8,6 @@ RUN apt-get update && \
 
 RUN corepack enable && corepack prepare yarn@1.22.22 --activate
 
-EXPOSE 3000
+EXPOSE 3030
 
 CMD ["yarn", "dev"]

@@ -4,6 +4,8 @@ import "./globals.scss";
 import { Inter } from "next/font/google";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { GlobalStateProvider } from './_context/GlobalState';
+import { ThumbnailProvider } from './_context/ThumbnailContext';
+import MuiThemeProvider from './components/MuiThemeProvider';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,11 +21,24 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
+      <head>
+        {/* Canvas描画用日本語フォント（Google Fonts CDN） */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&family=Noto+Serif+JP:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className={inter.className}>
         <AppRouterCacheProvider>
-          <GlobalStateProvider>
-            {children}
-          </GlobalStateProvider>
+          <MuiThemeProvider>
+            <GlobalStateProvider>
+              <ThumbnailProvider>
+                {children}
+              </ThumbnailProvider>
+            </GlobalStateProvider>
+          </MuiThemeProvider>
         </AppRouterCacheProvider>
       </body>
     </html>
