@@ -1,5 +1,5 @@
-@import "@variables";
-@import "@mixin";
+@use "../../styles/variables" as *;
+@use "../../styles/mixin" as *;
 
 .header {
   width: 100%;

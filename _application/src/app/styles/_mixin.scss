@@ -1,5 +1,8 @@
+@use "sass:map";
+@use "./variables" as vars;
+
 @mixin media($breakpoint) {
-  @media ( #{map-get($breakpoints, $breakpoint)} >=  width) {
+  @media (#{map.get(vars.$breakpoints, $breakpoint)} >= width) {
     @content;
   }
 }
