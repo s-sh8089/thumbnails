@@ -1,0 +1,292 @@
+@use "../styles/variables" as *;
+@use "../styles/mixin" as *;
+
+$base-margin: 1rem;
+$primary: #202940;
+$primary-hover: #2d3a59;
+$primary-light: #e8eaf0;
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-color: rgb(174, 183, 193);
+  background-image: radial-gradient(rgba(242, 242, 242, 0.9) 0%, rgba(251, 251, 251, 0.56) 45%, rgba(255, 255, 255, 0) 100%);
+
+  @include media(lg) {
+    padding: 6rem;
+  }
+  @include media(pc) {
+    padding: 6rem;
+  }
+  @include media(tb) {
+    padding: 3rem;
+    font-size: medium;
+  }
+  @include media(sp) {
+    padding: 1rem;
+    font-size: small;
+  }
+
+  h1 {
+    color: $title-color;
+    font-weight: bold;
+    font-size: x-large;
+    margin-bottom: $base-margin;
+  }
+}
+
+// フォントプリロード用（非表示）
+.fontPreloader {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+// プレビューエリア（上部・フル幅）- メインページの outputArea と同じ枠フォーマット
+.previewArea {
+  width: 100%;
+  padding: $base-margin;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  background-color: $bg-color;
+  box-shadow: 0px 10px 15px 0px rgba(0, 0, 0, 0.08);
+  margin-bottom: $base-margin * 1.5;
+
+  dt {
+    color: $title-color;
+    font-weight: bold;
+    padding-bottom: $base-margin;
+    border-bottom: 1px solid $border-color;
+    margin-bottom: $base-margin;
+  }
+
+  dd {
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      background-color: #efefef;
+    }
+  }
+}
+
+// コントロールパネル（下部・横並び）
+.controlPanel {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: $base-margin * 1.5;
+  background-color: $bg-color;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  padding: $base-margin * 1.5;
+  box-shadow: 0px 10px 15px 0px rgba(0, 0, 0, 0.08);
+  flex-wrap: wrap;
+
+  @include media(sp) {
+    flex-direction: column;
+  }
+}
+
+// テキスト入力（最も広い）
+.controlGroupText {
+  flex: 2;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: $base-margin * 0.4;
+}
+
+// フォント・サイズ・色のまとまり
+.controlGroupStyle {
+  flex: 1.5;
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  gap: $base-margin;
+}
+
+// フォント・サイズ・色の各行
+.controlGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $base-margin * 0.4;
+}
+
+// テキスト位置グリッド
+.controlGroupPosition {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: $base-margin * 0.4;
+}
+
+// アクションボタン（コントロールパネル外・独立セクション）
+.buttonSection {
+  width: 100%;
+  padding-top: 1.5rem;
+  margin-top: 1rem;
+  border-top: 1px solid $border-color;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: $base-margin;
+  margin-top: $base-margin * 1.5;
+}
+
+.label {
+  color: $title-color;
+  font-weight: bold;
+  font-size: 0.875rem;
+}
+
+.valueDisplay {
+  font-weight: normal;
+  color: #555;
+}
+
+.textarea {
+  width: 100%;
+  height: 100%;
+  min-height: 120px;
+  padding: 0.5rem;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  resize: vertical;
+  font-family: inherit;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: 2px solid $primary;
+    outline-offset: -1px;
+  }
+}
+
+.select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background-color: #fff;
+  cursor: pointer;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: 2px solid $primary;
+    outline-offset: -1px;
+  }
+}
+
+// スライダー（トラック・サムを明示的にスタイリング）
+.range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: #b0b8c8;
+  border-radius: 2px;
+  cursor: pointer;
+  outline: none;
+  margin: 8px 0;
+
+  // Webkit（Chrome / Safari）のサム
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: $primary;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -7px;
+    transition: background 0.15s ease;
+  }
+
+  &:hover::-webkit-slider-thumb {
+    background: $primary-hover;
+  }
+
+  // Firefox のトラック
+  &::-moz-range-track {
+    height: 4px;
+    background: #b0b8c8;
+    border-radius: 2px;
+  }
+
+  // Firefox のサム
+  &::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: $primary;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+.colorPickerRow {
+  display: flex;
+  align-items: center;
+  gap: $base-margin * 0.75;
+}
+
+.colorPicker {
+  width: 48px;
+  height: 36px;
+  padding: 2px;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  cursor: pointer;
+  background: none;
+}
+
+.colorValue {
+  font-size: 0.85rem;
+  color: #666;
+  font-family: monospace;
+}
+
+// テキスト位置プリセット（3×3グリッド）
+.positionGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.positionBtn {
+  aspect-ratio: 1;
+  width: 36px;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+
+  &:hover {
+    background-color: $primary-light;
+    border-color: $primary;
+  }
+}
+
+.positionBtnActive {
+  background-color: $primary;
+  border-color: $primary;
+  color: #fff;
+
+  &:hover {
+    background-color: $primary-hover;
+    border-color: $primary-hover;
+  }
+}

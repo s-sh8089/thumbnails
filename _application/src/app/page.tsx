@@ -4,23 +4,29 @@
 import styles from "./page.module.scss";
 // React
 import { useRef, useEffect, useState } from "react";
+// Next
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 // UI component
 import Button from '@mui/material/Button';
-// Next component
-import Image from "next/image";
 // my component
 import Footer from "@/app/components/footer";
 import InfoText from "@/app/components/infoText";
+// context
+import { useThumbnail } from "@/app/_context/ThumbnailContext";
 
 
 export default function Thumbnails () {
   // 定数
   const imageWidth = 1280;
   const imageHeight = 720;
-  // 状態管理
+  // context
+  const { canvasDataUrl, setCanvasDataUrl } = useThumbnail();
+  const router = useRouter();
+  // 状態管理（戻ってきたときにコンテキストから復元フラグを初期化）
   const [caputuredImage, setCaputuredImage] = useState<string|undefined>(undefined);
   const [selectedDesign, setSelectedDesign] = useState<string|undefined>(undefined);
-  const [generatedFlag, setgeneratedFlag] = useState<boolean>(false);
+  const [generatedFlag, setgeneratedFlag] = useState<boolean>(!!canvasDataUrl);
   // ref
   const canvasRef = useRef<HTMLCanvasElement>(null!);
   const caputuredImageRef = useRef<HTMLInputElement>(null!);
@@ -35,6 +41,23 @@ export default function Thumbnails () {
       }
     }
   })
+
+  // 文字編集ページから戻ってきたときにキャンバスを復元
+  useEffect(() => {
+    if (!canvasDataUrl || !canvasRef.current) return;
+    // next/image の Image と衝突しないよう document.createElement を使用
+    const img = document.createElement('img');
+    img.src = canvasDataUrl;
+    img.onload = () => {
+      if (!canvasRef.current) return;
+      canvasRef.current.width = imageWidth;
+      canvasRef.current.height = imageHeight;
+      const ctx = canvasRef.current.getContext('2d');
+      ctx?.drawImage(img, 0, 0);
+    };
+  // マウント時のみ実行（依存配列を空にすることで初回のみ復元）
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // ファイル選択ボタンが押下されたらinput要素にイベントを伝播する
   const fileInputHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -69,23 +92,34 @@ export default function Thumbnails () {
     }
   }
 
-  // 作成ボタンの処理
-  const generateHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+  // 作成ボタンの処理（画像の読み込みを待ってからCanvas描画）
+  const generateHandler = async (_event: React.MouseEvent<HTMLButtonElement>) => {
     if(!canvasRef.current) return;
     if (caputuredImage && selectedDesign) {
-      // 出力先のキャンバスサイズを指定
-      canvasRef.current.width = imageWidth;
-      canvasRef.current.height = imageHeight;
-      const ctx = canvasRef.current.getContext('2d');
-      // img要素(キャプチャ)を指定してcanvasに描画
-      const caputuredImageFile = document.createElement('img');
-      caputuredImageFile.src = caputuredImage;
-      ctx?.drawImage(caputuredImageFile, 0, 0, canvasRef.current.width, canvasRef.current.height);
-      // img要素(デザイン)を指定してcanvasに描画
-      const selectedDesignFile = document.createElement('img');
-      selectedDesignFile.src = selectedDesign;
-      ctx?.drawImage(selectedDesignFile, 0, 0, canvasRef.current.width, canvasRef.current.height);
-      // 生成済みフラグを更新
+      const canvas = canvasRef.current;
+      canvas.width = imageWidth;
+      canvas.height = imageHeight;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      const loadImage = (src: string): Promise<HTMLImageElement> =>
+        new Promise((resolve, reject) => {
+          const img = document.createElement('img');
+          img.onload = () => resolve(img);
+          img.onerror = reject;
+          img.src = src;
+        });
+
+      const [bgImg, designImg] = await Promise.all([
+        loadImage(caputuredImage),
+        loadImage(selectedDesign),
+      ]);
+
+      ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(designImg, 0, 0, canvas.width, canvas.height);
+
+      // コンテキストにキャンバスデータを保存（文字編集ページで使用）
+      setCanvasDataUrl(canvas.toDataURL('image/png'));
       setgeneratedFlag(true);
     }
     else {
@@ -94,7 +128,7 @@ export default function Thumbnails () {
   }
 
   // Canvas要素を保存するボタンの処理
-  const fileSaveHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const fileSaveHandler = (_event: React.MouseEvent<HTMLButtonElement>) => {
     if (!canvasRef.current) return;
     const date = new Date();
     const day = date.toLocaleDateString('ja-JP');
@@ -104,7 +138,13 @@ export default function Thumbnails () {
     link.download = `${day}_${timestamp}_thumbnail.jpeg`;
     link.click();
   }
-  const resetHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+
+  // 文字を入れるボタンの処理
+  const navigateToTextEditor = () => {
+    router.push('/text-editor');
+  }
+
+  const resetHandler = (_event: React.MouseEvent<HTMLButtonElement>) => {
     // キャンバス周りをリセット
     canvasRef.current.width = 0;
     canvasRef.current.height = 0;
@@ -115,6 +155,8 @@ export default function Thumbnails () {
     setCaputuredImage(undefined);
     setSelectedDesign(undefined);
     setgeneratedFlag(false);
+    // コンテキストをリセット
+    setCanvasDataUrl(undefined);
   }
   return (
     <main className={styles.main}>
@@ -201,9 +243,14 @@ export default function Thumbnails () {
             </li>
           )}
           {generatedFlag && (
-            <li className={styles.buttonBox}>
-              <Button onClick={fileSaveHandler} color="primary" size="large" variant="contained">保存</Button>
-            </li>
+            <>
+              <li className={styles.buttonBox}>
+                <Button onClick={fileSaveHandler} color="primary" size="large" variant="contained">保存</Button>
+              </li>
+              <li className={styles.buttonBox}>
+                <Button onClick={navigateToTextEditor} color="secondary" size="large" variant="contained">文字を入れる</Button>
+              </li>
+            </>
           )}
           <li>
             <Button onClick={resetHandler} color="primary" size="large" variant="outlined">リセット</Button>
