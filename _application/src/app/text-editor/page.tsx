@@ -64,13 +64,10 @@ export default function TextEditor() {
     if (!canvasRef.current || !canvasDataUrl) return;
     const canvas = canvasRef.current;
 
-    // ベース画像を読み込んでからキャンバスサイズを確定する（onload → src の順）
+    // ベース画像を読み込んでからキャンバスサイズを確定する
     const img = new Image();
-    await new Promise<void>((resolve, reject) => {
-      img.onload = () => resolve();
-      img.onerror = reject;
-      img.src = canvasDataUrl;
-    });
+    img.src = canvasDataUrl;
+    await img.decode();
 
     // ベース画像の自然サイズをそのままキャンバスサイズとして使用
     const canvasW = img.naturalWidth;

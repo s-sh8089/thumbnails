@@ -156,14 +156,12 @@ export default function Thumbnails () {
       try {
         const canvas = canvasRef.current;
 
-        // onload/onerrorをsrc設定より先に登録してイベント取りこぼしを防ぐ
-        const loadImage = (src: string): Promise<HTMLImageElement> =>
-          new Promise((resolve, reject) => {
-            const img = document.createElement('img');
-            img.onload = () => resolve(img);
-            img.onerror = reject;
-            img.src = src;
-          });
+        const loadImage = async (src: string): Promise<HTMLImageElement> => {
+          const img = document.createElement('img');
+          img.src = src;
+          await img.decode();
+          return img;
+        };
 
         const [bgImg, designImg] = await Promise.all([
           loadImage(caputuredImage),
