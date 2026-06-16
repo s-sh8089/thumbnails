@@ -7,9 +7,6 @@ import { useThumbnail } from "@/app/_context/ThumbnailContext";
 import Footer from "@/app/components/footer";
 import styles from "./page.module.scss";
 
-// キャンバスの内部解像度
-const CANVAS_WIDTH = 1280;
-const CANVAS_HEIGHT = 720;
 // テキストの端からのパディング（px）
 const PADDING = 50;
 
@@ -61,25 +58,30 @@ export default function TextEditor() {
 
   /**
    * テキスト・スタイル・位置が変わるたびにCanvasを再描画する
-   * ベース画像の上にフォント・色・位置設定を適用してテキストを合成する
+   * ベース画像の自然サイズをキャンバスサイズとして使用し、テキストを合成する
    */
   const drawCanvas = useCallback(async () => {
     if (!canvasRef.current || !canvasDataUrl) return;
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
 
-    canvas.width = CANVAS_WIDTH;
-    canvas.height = CANVAS_HEIGHT;
-
-    // ベース画像を描画
+    // ベース画像を読み込んでからキャンバスサイズを確定する（onload → src の順）
     const img = new Image();
-    img.src = canvasDataUrl;
     await new Promise<void>((resolve, reject) => {
       img.onload = () => resolve();
       img.onerror = reject;
+      img.src = canvasDataUrl;
     });
-    ctx.drawImage(img, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+    // ベース画像の自然サイズをそのままキャンバスサイズとして使用
+    const canvasW = img.naturalWidth;
+    const canvasH = img.naturalHeight;
+    canvas.width  = canvasW;
+    canvas.height = canvasH;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    ctx.drawImage(img, 0, 0, canvasW, canvasH);
 
     if (!text.trim()) return;
 
@@ -88,11 +90,13 @@ export default function TextEditor() {
 
     const lines = text.split("\n");
     const lineHeight = fontSize * 1.4;
-    // テキストブロック全体の高さ（先頭ベースラインから末尾ベースラインまで）
-    const totalHeight = fontSize + (lines.length - 1) * lineHeight;
+    // テキストブロック全体の高さ（先頭文字上端から末尾文字上端＋fontSize分まで）
+    const totalHeight = (lines.length - 1) * lineHeight + fontSize;
 
     ctx.font = `bold ${fontSize}px ${fontFamily}`;
     ctx.fillStyle = color;
+    // Y座標の基準を文字上端に統一することでtop/bottomの余白を対称にする
+    ctx.textBaseline = "top";
 
     // 水平位置・textAlign の設定
     const [vertPart, horizPart] = position.split("-");
@@ -102,20 +106,20 @@ export default function TextEditor() {
       x = PADDING;
     } else if (horizPart === "center") {
       ctx.textAlign = "center";
-      x = CANVAS_WIDTH / 2;
+      x = canvasW / 2;
     } else {
       ctx.textAlign = "right";
-      x = CANVAS_WIDTH - PADDING;
+      x = canvasW - PADDING;
     }
 
-    // 垂直位置の先頭行ベースラインを計算
+    // 垂直位置の先頭行上端Y座標を計算（textBaseline="top"基準）
     let startY: number;
     if (vertPart === "top") {
-      startY = PADDING + fontSize;
+      startY = PADDING;
     } else if (vertPart === "middle") {
-      startY = (CANVAS_HEIGHT - totalHeight) / 2 + fontSize;
+      startY = (canvasH - totalHeight) / 2;
     } else {
-      startY = CANVAS_HEIGHT - PADDING - totalHeight + fontSize;
+      startY = canvasH - PADDING - totalHeight;
     }
 
     lines.forEach((line, i) => {
@@ -124,7 +128,8 @@ export default function TextEditor() {
   }, [canvasDataUrl, text, fontFamily, fontSize, color, position]);
 
   useEffect(() => {
-    drawCanvas();
+    // 未処理のPromise rejectionを防ぐため void で明示的に破棄する
+    void drawCanvas();
   }, [drawCanvas]);
 
   /** タイムスタンプ（ISO形式）をファイル名にしてJPEGをダウンロードする */
@@ -146,13 +151,11 @@ export default function TextEditor() {
     <main className={styles.main}>
       <h1>Writing</h1>
 
-      {/* フォントをブラウザにプリロードさせるための非表示要素 */}
+      {/* フォントをブラウザにプリロードさせるための非表示要素（FONT_OPTIONSから生成） */}
       <div className={styles.fontPreloader} aria-hidden="true">
-        <span style={{ fontFamily: '"Noto Sans JP"' }}>a</span>
-        <span style={{ fontFamily: '"Noto Serif JP"' }}>a</span>
-        <span style={{ fontFamily: '"Dela Gothic One"' }}>a</span>
-        <span style={{ fontFamily: '"M PLUS Rounded 1c"' }}>a</span>
-        <span style={{ fontFamily: '"Zen Kaku Gothic New"' }}>a</span>
+        {FONT_OPTIONS.map((opt) => (
+          <span key={opt.value} style={{ fontFamily: opt.value }}>a</span>
+        ))}
       </div>
 
       {/* プレビュー（上部・フル幅） */}

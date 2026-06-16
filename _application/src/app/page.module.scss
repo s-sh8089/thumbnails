@@ -131,6 +131,42 @@ $base-margin: 1rem;
   }
 }
 
+.aspectRatioLabel {
+  display: block;
+  font-size: 0.8rem;
+  color: $title-color;
+  margin-bottom: 0.4rem;
+}
+
+.aspectRatioGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.aspectRatioOption {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  background-color: #fff;
+  transition: background-color 0.15s, border-color 0.15s;
+
+  &:has(input:checked) {
+    border-color: #1976d2;
+    background-color: #e3f0fb;
+  }
+
+  input[type="radio"] {
+    cursor: pointer;
+    accent-color: #1976d2;
+  }
+}
+
 .outputArea {
   width: 100%;
   padding: $base-margin;

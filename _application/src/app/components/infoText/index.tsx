@@ -8,7 +8,7 @@ export default function InfoText () {
         <h3>● 推奨している入力画像仕様</h3>
         <ul>
           <li>アスペクト比が16:9であるもの</li>
-          <li>解像度が横1280×縦720</li>
+          <li>解像度は横1280×縦720相当</li>
           <li>キャプチャ画像はJPEG,PNG,BMPを想定</li>
           <li>デザインの方は透過が設定されているPNGのみ対応</li>
         </ul>
@@ -16,7 +16,6 @@ export default function InfoText () {
       <div className={styles.textBox}>
       <h3>● 出力される画像仕様</h3>
       <ul>
-        <li>解像度は横1280×縦720</li>
         <li>圧縮するため、およそ500KB以下のJPEG形式</li>
       </ul>
       </div>
@@ -24,7 +23,7 @@ export default function InfoText () {
       <h3>● 注意事項</h3>
       <ul>
         <li>個人が作成したものなので、意図しないエラーが発生することもあります。</li>
-        <li>アスペクト比が16:9でない場合、出力された画像が意図しない結果になる可能性があります。</li>
+        <li>アスペクト比の指定によっては出力された画像が意図しない結果になる可能性があります。</li>
         <li>選択された画像の解像度が低い場合、引き伸ばされて表示されるため出力時の解像度が荒くなります。</li>
       </ul>
       </div>
